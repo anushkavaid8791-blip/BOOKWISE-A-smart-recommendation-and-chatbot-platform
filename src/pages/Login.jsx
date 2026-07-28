@@ -2,6 +2,7 @@ import { useState } from "react";
 import Logo from "../components/Logo";
 import GoogleButton from "../components/GoogleButton";
 import "./Login.css";
+import { signInWithGoogle } from "../firebase";
 
 
 // Backend base URL — set this in your .env file as VITE_API_BASE_URL
