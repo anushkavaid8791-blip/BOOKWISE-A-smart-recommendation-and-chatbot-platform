@@ -1,0 +1,126 @@
+.login {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+}
+
+/* ---------- Left hero panel ---------- */
+
+.login__hero {
+  position: relative;
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--color-cream);
+  background-image:
+    linear-gradient(180deg, rgba(20, 10, 6, 0.35) 0%, rgba(20, 10, 6, 0.75) 100%),
+    url("https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1200&q=80");
+  background-size: cover;
+  background-position: center;
+}
+
+.login__hero-top {
+  position: relative;
+  z-index: 1;
+}
+
+.login__hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 560px;
+}
+
+.login__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: var(--space-3);
+}
+
+.login__hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1.15;
+  margin-bottom: var(--space-3);
+}
+
+.login__hero-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(246, 240, 230, 0.85);
+  max-width: 460px;
+}
+
+/* ---------- Right sign-in panel ---------- */
+
+.login__panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-cream);
+  padding: var(--space-4);
+}
+
+.login__panel-inner {
+  width: 100%;
+  max-width: 420px;
+}
+
+.login__meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  margin-bottom: var(--space-3);
+}
+
+.login__title {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 500;
+  color: var(--color-ink);
+  margin-bottom: var(--space-2);
+}
+
+.login__subtitle {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--color-ink-muted);
+  margin-bottom: var(--space-4);
+}
+
+.login__footnote {
+  margin-top: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.7;
+  color: var(--color-ink-muted);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .login {
+    grid-template-columns: 1fr;
+  }
+
+  .login__hero {
+    min-height: 340px;
+    padding: var(--space-3);
+  }
+
+  .login__panel {
+    padding: var(--space-3);
+  }
+
+  .login__title {
+    font-size: 2rem;
+  }
+}
