@@ -1,3 +1,4 @@
+
 import "./GoogleButton.css";
 
 export default function GoogleButton({ onClick, loading }) {
@@ -5,10 +6,13 @@ export default function GoogleButton({ onClick, loading }) {
     <button className="google-btn" onClick={onClick} disabled={loading}>
       <img
         src="https://www.svgrepo.com/show/475656/google-color.svg"
-        alt="Google"
+        alt="Google Icon"
         className="google-icon"
+        style={{ width: "18px", height: "18px" }}
       />
-      <span>{loading ? "Redirecting..." : "Continue with Google"}</span>
+      <span style={{ flex: 1 }}>
+        {loading ? "Redirecting..." : "Continue with Google"}
+      </span>
       {!loading && <span className="arrow">→</span>}
     </button>
   );
