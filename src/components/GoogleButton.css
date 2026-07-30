@@ -1,4 +1,4 @@
-.google-btn {
+.google-button {
   width: 100%;
   display: flex;
   align-items: center;
@@ -16,17 +16,17 @@
   font-family: inherit;
 }
 
-.google-btn:hover:not(:disabled) {
+.google-button:hover:not(:disabled) {
   background: #a15a30;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(181, 103, 58, 0.25);
 }
 
-.google-btn:active:not(:disabled) {
+.google-button:active:not(:disabled) {
   transform: translateY(0);
 }
 
-.google-btn:disabled {
+.google-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
@@ -46,6 +46,6 @@
   transition: transform 0.2s ease;
 }
 
-.google-btn:hover:not(:disabled) .arrow {
+.google-button:hover:not(:disabled) .arrow {
   transform: translateX(3px);
 }
