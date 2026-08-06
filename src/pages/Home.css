@@ -1,0 +1,198 @@
+/* ===== Home Page ===== */
+
+.home {
+  background: #f8f5f1;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+}
+
+/* ===== Hero Section ===== */
+
+.hero {
+  background: linear-gradient(135deg, #f5e6dc, #fff8f2);
+  padding: 80px 10%;
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  color: #5a3825;
+  margin-bottom: 20px;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  color: #666;
+  max-width: 650px;
+  margin: 0 auto 35px;
+  line-height: 1.7;
+}
+
+/* ===== Search ===== */
+
+.search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.search input {
+  width: 420px;
+  max-width: 90%;
+  padding: 14px 18px;
+  border: 2px solid #d9c4b5;
+  border-radius: 10px;
+  outline: none;
+  font-size: 1rem;
+}
+
+.search input:focus {
+  border-color: #b5673a;
+}
+
+.search button {
+  background: #b5673a;
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.search button:hover {
+  background: #9d562f;
+}
+
+/* ===== Featured Books ===== */
+
+.featured {
+  padding: 70px 10%;
+}
+
+.featured h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #5a3825;
+}
+
+.books-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+/* ===== Categories ===== */
+
+.categories {
+  padding: 70px 10%;
+  text-align: center;
+}
+
+.categories h2 {
+  margin-bottom: 30px;
+  color: #5a3825;
+}
+
+.category-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.category-list button {
+  background: white;
+  border: 2px solid #b5673a;
+  color: #b5673a;
+  padding: 10px 22px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 0.95rem;
+}
+
+.category-list button:hover {
+  background: #b5673a;
+  color: white;
+}
+
+/* ===== AI Section ===== */
+
+.ai-box {
+  margin: 70px auto;
+  width: 85%;
+  max-width: 1000px;
+  background: linear-gradient(135deg, #b5673a, #8f4d29);
+  color: white;
+  text-align: center;
+  padding: 60px 30px;
+  border-radius: 20px;
+}
+
+.ai-box h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.ai-box p {
+  font-size: 1rem;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.ai-box button {
+  background: white;
+  color: #b5673a;
+  border: none;
+  padding: 14px 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.ai-box button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== Responsive ===== */
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 60px 20px;
+  }
+
+  .hero-content h1 {
+    font-size: 2.2rem;
+  }
+
+  .search {
+    flex-direction: column;
+  }
+
+  .search input {
+    width: 100%;
+  }
+
+  .search button {
+    width: 100%;
+  }
+
+  .featured,
+  .categories {
+    padding: 50px 20px;
+  }
+
+  .ai-box {
+    width: 90%;
+    padding: 40px 20px;
+  }
+}
