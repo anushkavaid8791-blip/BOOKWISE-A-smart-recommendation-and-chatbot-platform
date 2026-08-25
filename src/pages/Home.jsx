@@ -100,7 +100,7 @@ function Home() {
           Try AI Recommendation
         </button>
       </section>
-
+      
       <Footer />
     </div>
   );
