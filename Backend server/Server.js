@@ -3,23 +3,26 @@
 // NOTE: package.json mein "type": "module" h, isliye yahan IMPORT syntax use hoga (require nahi)
 
 // ===== 1. Imports =====
+// 🔧 FIX: 'dotenv/config' sabse PEHLI import line honi chahiye.
+// ES Modules mein saari imports resolve hone ke baad hi file ka baaki code chalta h —
+// agar authRoutes (jo Firebase import karta h) upar likha ho, toh Firebase
+// dotenv.config() chalne se PEHLE hi load ho sakta h, isliye .env values undefined milti thi.
+// 'dotenv/config' ko sabse top pe rakhne se yeh guaranteed sabse pehle chalta h.
+import 'dotenv/config';
+
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import dns from 'dns';
-
-dotenv.config(); // .env file load karta h
 
 // 🔧 FIX: Node ka default DNS resolver kabhi kabhi SRV lookup fail kar deta h
 // (especially Reliance/Jio jaise ISPs pe) — Google DNS force karke fix karte h.
-// Yeh Windows System DNS settings pe depend nahi karta, code-level fix h.
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 // Routes — jaise jaise files banti jayengi, yahan uncomment karte jaana
 import authRoutes from './routes/authRoutes.js';
-// import userRoutes from './routes/userRoutes.js';           // 🔜 abhi nahi bani
-// import bookRoutes from './routes/bookRoutes.js';           // 🔜 abhi nahi bani
+import userRoutes from './routes/userRoutes.js';
+import bookRoutes from './routes/bookRoutes.js';
 import recommendationRoutes from './routes/recommendationRoutes.js';
 
 // ===== 2. App Initialize =====
@@ -57,8 +60,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
-// app.use('/api/users', userRoutes);                    // 🔜 userRoutes.js banne ke baad uncomment karo
-// app.use('/api/books', bookRoutes);                    // 🔜 bookRoutes.js banne ke baad uncomment karo
+app.use('/api/users', userRoutes);
+app.use('/api/books', bookRoutes);
 app.use('/api/recommendations', recommendationRoutes);
 
 // ===== 6. 404 Handler =====

@@ -23,10 +23,10 @@ const userSchema = new mongoose.Schema(
     googleId: {
       type: String,
       unique: true,
-      sparse: true // sparse: allows multiple docs with null googleId (agar email/password wale bhi ho)
+      sparse: true
     },
     profilePicture: {
-      type: String, // Google se aayi photo URL
+      type: String,
       default: null
     },
 
@@ -50,6 +50,20 @@ const userSchema = new mongoose.Schema(
       }
     ],
 
+    // ===== Reading Streak =====
+    currentStreak: {
+      type: Number,
+      default: 0
+    },
+    longestStreak: {
+      type: Number,
+      default: 0
+    },
+    lastActiveDate: {
+      type: Date,
+      default: null
+    },
+
     // ===== Account Meta =====
     isVerified: {
       type: Boolean,
@@ -61,11 +75,10 @@ const userSchema = new mongoose.Schema(
     }
   },
   {
-    timestamps: true // createdAt, updatedAt auto add ho jayenge
+    timestamps: true
   }
 );
 
-// Password kabhi bhi response mein na jaye (agar future mein email/password auth bhi add karein)
 userSchema.methods.toJSON = function () {
   const user = this.toObject();
   delete user.password;
