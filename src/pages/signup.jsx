@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { signInWithPopup, createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, googleProvider } from "../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 import { useNavigate, Link } from "react-router-dom";
 import Logo from "../components/Logo";
+import { useAuth } from "../context/AuthContext";
 import "./Signup.css";
 
 export default function Signup() {
@@ -10,32 +11,45 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { loginWithGoogle } = useAuth();
 
   const handleGoogleSignIn = async () => {
+    setLoading(true);
+    setError("");
     try {
-      await signInWithPopup(auth, googleProvider);
-      navigate("/dashboard");
+      const res = await loginWithGoogle();
+      if (res.success) {
+        navigate("/");
+      } else {
+        setError(res.error || "Google sign-in failed.");
+      }
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Could not sign in with Google.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleEmailSignup = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/dashboard");
+      navigate("/");
     } catch (err) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="signup-page">
       <div className="signup-card">
-        <Logo />
+        <Logo variant="dark" />
         <h1>Create your account</h1>
         <p className="signup-subtext">Join BookWise and find your next read.</p>
 
@@ -66,8 +80,8 @@ export default function Signup() {
 
           {error && <p className="error-text">{error}</p>}
 
-          <button type="submit" className="signup-btn">
-            Sign Up
+          <button type="submit" className="signup-btn" disabled={loading}>
+            {loading ? "Creating account..." : "Sign Up"}
           </button>
         </form>
 
@@ -75,7 +89,7 @@ export default function Signup() {
           <span>or</span>
         </div>
 
-        <button className="google-btn" onClick={handleGoogleSignIn}>
+        <button className="google-btn" onClick={handleGoogleSignIn} disabled={loading}>
           <img
             src="https://www.svgrepo.com/show/475656/google-color.svg"
             alt="Google"

@@ -74,4 +74,29 @@ router.get('/personalized', async (req, res) => {
   }
 });
 
+// POST /api/recommendations/chat  (Multilingual literary chat & document Q&A)
+router.post('/chat', async (req, res) => {
+  try {
+    const { message, history, language, bookContext } = req.body;
+    if (!message || typeof message !== 'string') {
+      return res.status(400).json({ error: 'message text required' });
+    }
+
+    const result = await recService.chatWithBookWise({
+      message,
+      history,
+      language,
+      bookContext
+    });
+
+    res.json({
+      success: true,
+      reply: result?.reply || (typeof result === 'string' ? result : ''),
+      books: result?.books || []
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 export default router;

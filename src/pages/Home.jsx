@@ -1,106 +1,105 @@
-import { auth } from "../firebase";
-import { signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import BookCard from "../components/BookCard";
-import Footer from "../components/Footer";
-import "./Home.css";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import TrendingBooks from '../components/Trendingbooks';
+import GenreSelector from '../components/GenreSelector';
+import GenreBasedRecommend from '../components/GenreBasedRecommend';
+import FavoriteAuthors from '../components/FavoriteAuthors';
+import BookModal from '../components/BookModal';
+import BookReaderModal from '../components/BookReaderModal';
+import WishlistModal from '../components/WishlistModal';
+import FloatingChatbot from '../components/chatbot/FloatingChatbot';
+import Footer from '../components/Footer';
+import './Home.css';
 
 function Home() {
   const navigate = useNavigate();
+  const [selectedGenre, setSelectedGenre] = useState(null);
+  const [activeBook, setActiveBook] = useState(null);
+  const [readingBook, setReadingBook] = useState(null);
+  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
 
-  // Dummy books (Later Google Books API se replace karenge)
-  const books = [
-    {
-      title: "Atomic Habits",
-      author: "James Clear",
-      image: "https://m.media-amazon.com/images/I/91bYsX41DVL.jpg",
-      rating: "4.8",
-    },
-    {
-      title: "The Alchemist",
-      author: "Paulo Coelho",
-      image: "https://m.media-amazon.com/images/I/71aFt4+OTOL.jpg",
-      rating: "4.6",
-    },
-    {
-      title: "Harry Potter",
-      author: "J.K. Rowling",
-      image: "https://m.media-amazon.com/images/I/81YOuOGFCJL.jpg",
-      rating: "4.9",
-    },
-  ];
+  const handleGenreSelect = (genre) => {
+    setSelectedGenre(genre);
+  };
 
-  const categories = [
-    "Fiction",
-    "Mystery",
-    "Romance",
-    "Sci-Fi",
-    "Self Help",
-    "Technology",
-  ];
+  const handleAuthorSelect = (authorQuery) => {
+    navigate(`/recommend?author=${encodeURIComponent(authorQuery)}`);
+  };
 
   return (
     <div className="home">
-      <Navbar />
+      {/* Upgraded Navbar with search & wishlist triggers */}
+      <Navbar
+        onOpenWishlist={() => setIsWishlistOpen(true)}
+        onSelectBook={(book) => setActiveBook(book)}
+      />
 
-      {/* Hero Section */}
-      <section className="hero">
-        <div className="hero-content">
-          <h1>Discover Your Next Favourite Book 📚</h1>
-
-          <p>
-            Search millions of books and get AI-powered recommendations based
-            on your interests.
-          </p>
-
-          <div className="search">
-            <input
-              type="text"
-              placeholder="Search books, authors or genres..."
+      <main className="home-main">
+        <div className="container">
+          
+          {/* Trending Books Section */}
+          <section className="section trending-section">
+            <TrendingBooks
+              onSelectBook={(book) => setActiveBook(book)}
+              onReadBook={(book) => setReadingBook(book)}
             />
+          </section>
 
-            <button>🔍 Search</button>
-          </div>
+          {/* Genre Selector Section */}
+          <section className="section genre-section">
+            <GenreSelector onGenreSelect={handleGenreSelect} />
+          </section>
+
+          {/* Genre-Based Recommendations */}
+          {selectedGenre && (
+            <section className="section recommendations-section">
+              <GenreBasedRecommend 
+                genre={selectedGenre} 
+                onSelectBook={(book) => setActiveBook(book)} 
+              />
+            </section>
+          )}
+
+          {/* Favorite Authors Section */}
+          <section className="section authors-section">
+            <FavoriteAuthors onSelectAuthor={handleAuthorSelect} />
+          </section>
+
         </div>
-      </section>
+      </main>
 
-      {/* Featured Books */}
-      <section className="featured">
-        <h2>Featured Books</h2>
+      {/* Book Details Modal */}
+      {activeBook && (
+        <BookModal 
+          book={activeBook} 
+          onClose={() => setActiveBook(null)}
+          onReadBook={(book) => setReadingBook(book)}
+        />
+      )}
 
-        <div className="books-container">
-          {books.map((book, index) => (
-            <BookCard key={index} book={book} />
-          ))}
-        </div>
-      </section>
+      {/* Full Book Reader Modal */}
+      {readingBook && (
+        <BookReaderModal
+          book={readingBook}
+          onClose={() => setReadingBook(null)}
+        />
+      )}
 
-      {/* Categories */}
-      <section className="categories">
-        <h2>Browse Categories</h2>
+      {/* Wishlist Drawer / Modal */}
+      {isWishlistOpen && (
+        <WishlistModal
+          onClose={() => setIsWishlistOpen(false)}
+          onReadBook={(book) => {
+            setIsWishlistOpen(false);
+            setReadingBook(book);
+          }}
+        />
+      )}
 
-        <div className="category-list">
-          {categories.map((category, index) => (
-            <button key={index}>{category}</button>
-          ))}
-        </div>
-      </section>
+      {/* Cute Floating AI Chatbot in corner */}
+      <FloatingChatbot onReadBook={(book) => setReadingBook(book)} />
 
-      {/* AI Recommendation */}
-      <section className="ai-box">
-        <h2>🤖 AI Book Recommendation</h2>
-
-        <p>
-          Tell BookWise your mood, favourite genre, or reading goal and let AI
-          recommend the perfect books for you.
-        </p>
-
-        <button onClick={() => navigate("/recommend")}>
-          Try AI Recommendation
-        </button>
-      </section>
-      
       <Footer />
     </div>
   );

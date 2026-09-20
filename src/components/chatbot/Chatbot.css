@@ -256,6 +256,106 @@
 .chatbot-input-bar {
   display: flex;
   gap: 10px;
-  padding: 16px 24px 20px;
+  padding: 12px 20px 16px;
   background: #FBF6EE;
+  align-items: center;
 }
+
+/* Multilingual Bar */
+.chatbot-lang-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 20px;
+  background: #F4ECE0;
+  border-bottom: 1px solid #E6DCCF;
+  overflow-x: auto;
+}
+
+.lang-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: #7A7265;
+  margin-right: 4px;
+  white-space: nowrap;
+}
+
+.lang-chip {
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid #D6CAC0;
+  background: #FBF6EE;
+  font-size: 11px;
+  color: #554D42;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.lang-chip:hover {
+  border-color: #D96B27;
+  color: #D96B27;
+}
+
+.lang-chip.active {
+  background: #D96B27;
+  color: white;
+  border-color: #D96B27;
+  font-weight: 500;
+}
+
+/* Document Attachment Banner */
+.chat-attachment-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 16px;
+  background: #EAE1D5;
+  border-top: 1px dashed #D4C6B7;
+  font-size: 11.5px;
+  color: #38302A;
+}
+
+.attachment-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.attachment-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #888;
+  padding: 2px 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.attachment-remove:hover {
+  color: #d9534f;
+}
+
+.attach-btn {
+  background: #EFE6D8;
+  border: 1px solid #D6CAC0;
+  border-radius: 8px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #554D42;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.attach-btn:hover {
+  background: #D96B27;
+  color: white;
+  border-color: #D96B27;
+}

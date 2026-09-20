@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
 
-export const verifyToken = (req, res, next) => {
+export const verifyToken = async (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
     
@@ -9,7 +10,8 @@ export const verifyToken = (req, res, next) => {
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.userId = decoded.userId;
+    req.userId = decoded.id || decoded.userId;
+    req.user = await User.findById(req.userId).select('-password');
     next();
   } catch (err) {
     if (err.name === 'TokenExpiredError') {
@@ -19,13 +21,14 @@ export const verifyToken = (req, res, next) => {
   }
 };
 
-export const verifyTokenOptional = (req, res, next) => {
+export const verifyTokenOptional = async (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
     
     if (token) {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      req.userId = decoded.userId;
+      req.userId = decoded.id || decoded.userId;
+      req.user = await User.findById(req.userId).select('-password');
     }
     next();
   } catch (err) {

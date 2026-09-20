@@ -1,21 +1,31 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
 import GoogleButton from "../components/GoogleButton";
+import { useAuth } from "../context/AuthContext";
 import "./Login.css";
-import { signInWithGoogle } from "../firebase";
-
-
-// Backend base URL — set this in your .env file as VITE_API_BASE_URL
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
 function Login() {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { loginWithGoogle } = useAuth();
 
-  const handleGoogleSignIn = () => {
+  const handleGoogleSignIn = async () => {
     setLoading(true);
-    // Redirects to your Express + Passport (or Firebase) Google OAuth route.
-    // Backend should redirect back to the frontend with a session/JWT set.
-    window.location.href = `${API_BASE_URL}/api/auth/google`;
+    setError("");
+    try {
+      const res = await loginWithGoogle();
+      if (res.success) {
+        navigate("/");
+      } else {
+        setError(res.error || "Could not sign in with Google. Please try again.");
+      }
+    } catch (err) {
+      setError(err.message || "An unexpected error occurred during sign-in.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -50,6 +60,12 @@ function Login() {
             Sign in with Google to enter your personal library. Your
             wishlist, favorite authors, and reading streak travel with you.
           </p>
+
+          {error && (
+            <p style={{ color: '#d9534f', fontSize: '13px', marginBottom: '16px', background: '#ffebee', padding: '10px', borderRadius: '6px' }}>
+              {error}
+            </p>
+          )}
 
           <GoogleButton onClick={handleGoogleSignIn} loading={loading} />
 

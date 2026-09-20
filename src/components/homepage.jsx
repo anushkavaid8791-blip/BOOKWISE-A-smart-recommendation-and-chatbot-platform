@@ -1,18 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Navbar from '../components/Navbar';
 import TrendingBooks from '../components/TrendingBooks';
+import './HomePage.css';
 
 export default function HomePage() {
+  const [selectedGenre, setSelectedGenre] = useState(null);
+
+  const handleGenreSelect = (genre) => {
+    setSelectedGenre(genre);
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        <TrendingBooks />
-        
-        {/* Rest of homepage content */}
-        <section className="mt-12">
-          <h2 className="text-2xl font-bold mb-6">Explore More</h2>
-          {/* Add more sections here */}
-        </section>
-      </div>
+    <div className="home-page">
+      <Navbar />
+      
+      <main className="home-main">
+        <div className="container">
+          
+          {/* Trending Books Section */}
+          <section className="trending-section">
+            <TrendingBooks />
+          </section>
+
+          {/* Genre Selector Section */}
+          <section className="genre-section">
+            <GenreSelector onGenreSelect={handleGenreSelect} />
+          </section>
+
+          {/* Genre-Based Recommendations */}
+          {selectedGenre && (
+            <section className="recommendations-section">
+              <GenreBasedRecommend genre={selectedGenre} />
+            </section>
+          )}
+
+          {/* Favorite Authors Section */}
+          <section className="authors-section">
+            <FavoriteAuthors />
+          </section>
+
+        </div>
+      </main>
     </div>
   );
 }

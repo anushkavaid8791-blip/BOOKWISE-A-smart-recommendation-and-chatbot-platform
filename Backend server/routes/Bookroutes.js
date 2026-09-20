@@ -1,5 +1,5 @@
 import express from 'express';
-import { searchBooks, getBookById, getTrendingBooks, rateBook } from '../services/bookService.js';
+import { searchBooks, getBookById, getTrendingBooks, rateBook, getBookContent } from '../services/bookService.js';
 import { verifyToken, verifyTokenOptional } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -47,6 +47,25 @@ router.get('/trending', async (req, res) => {
   } catch (err) {
     res.status(500).json({ 
       success: false,
+      error: err.message 
+    });
+  }
+});
+
+router.get('/read/content', async (req, res) => {
+  try {
+    const { title, author } = req.query;
+    if (!title) {
+      return res.status(400).json({ success: false, error: 'Book title required' });
+    }
+    const content = await getBookContent(title, author);
+    res.json({
+      success: true,
+      data: content
+    });
+  } catch (err) {
+    res.status(500).json({ 
+      success: false, 
       error: err.message 
     });
   }
